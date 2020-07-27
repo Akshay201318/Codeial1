@@ -1,16 +1,23 @@
+//importing express to this project
 const express = require('express');
+
+//importing cookie parser
+const cookieParser = require('cookie-parser');
 const app = express();
 const port = 8000;
 
-
+//importing database
 const db = require('./config/mongoose');
 
 // importing the layout library
-
 const expressLayout = require('express-ejs-layouts');
 
-// importing static files
+// Middlewheres
+app.use(express.urlencoded());
+app.use(cookieParser());
 
+
+// using static files
 app.use(express.static('./static'));
 
 //extracting styles and script files from pages
