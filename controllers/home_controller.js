@@ -12,20 +12,28 @@ module.exports.home = async function (req, res) {
         
     // });
 
-    const posts = await Post.find().populate('user')
-    console.log(posts.user);
-    return res.render('home', {
-                title: "Home",
-                posts: posts
-            });
-    // Post.find({}).populate('users').exec(function (err, posts) {
+    // const posts = await Post.find().populate('user').populate
+    // console.log(posts.user);
+    // return res.render('home', {
+    //             title: "Home",
+    //             posts: posts
+    //         });
+    Post.find({}).
+        populate('user').
+        populate({
+            path: 'comment',
+            populate: {
+                path:'user'
+            }
+        })
+        .exec(function (err, posts) {
 
 
-    //     return res.render('home', {
-    //         title: "Home",
-    //         posts: posts
-    //     });
+        return res.render('home', {
+            title: "Home",
+            posts: posts
+        });
         
-    // });
+    });
     
 }
