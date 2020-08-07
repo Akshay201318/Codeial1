@@ -5,8 +5,25 @@
 
 <section id="posts">
         <h4>Posts</h4>
-        <form action="" method="post">
-                <input type="textarea" id="post-content" cols="30" row="20" placeholder="Type here....">
+        <form action="/posts/create" method="post">
+                <textarea id="post-content" name= "content"cols="30" row="20" placeholder="Type here...."></textarea>
                 <button type="submit" id="post">Post</button>
         </form>
+
+        <div id="all-posts">
+        
+                <ul>
+                        <%for(post of posts){%>
+
+                                <li>
+                                        <p>
+                                                <%= post.content%>
+                                                <%= post.user.email%>
+                                        </p>
+                                        
+                                </li>
+                                <%}%>
+                </ul>
+
+        </div>
 </section>
