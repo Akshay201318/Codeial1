@@ -1,5 +1,7 @@
 const Post = require('../models/post');
 
+const User = require('../models/user');
+
 module.exports.home = async function (req, res) {
 
     // posts.find({}, function (err, posts) {
@@ -18,22 +20,32 @@ module.exports.home = async function (req, res) {
     //             title: "Home",
     //             posts: posts
     //         });
-    Post.find({}).
+
+    try {
+
+        let posts = await Post.find({}).
+        sort('-createdAt').
         populate('user').
         populate({
             path: 'comment',
             populate: {
-                path:'user'
+                path: 'user'
             }
-        })
-        .exec(function (err, posts) {
-
-
-        return res.render('home', {
-            title: "Home",
-            posts: posts
         });
         
+
+    let user = await User.find({});
+
+    return res.render('home', {
+        title: "Home",
+        posts: posts,
+        all_users: user
     });
-    
-}
+        
+    } catch (err) {
+        
+        req.flash('error', err);
+        return;
+    }
+           
+};
